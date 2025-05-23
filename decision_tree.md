@@ -44,7 +44,7 @@ print(df.head()) # แสดงข้อมูล 5 แถวแรก
 df.columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class']
 print(df.head()) # แสดง 5 แถวแรก
 ```
-## ตรวจสอบข้อมูล
+## preparing data
 missing values  
 count class  
 slipt X/y  
@@ -77,4 +77,42 @@ model.fit(X_train, y_train)
 ## prediction
 ```
 y_pred = model.predict(X_test)
+```
+## confusion matrix
+```
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels= y.unique())
+disp.plot()
+```
+## evaluation
+```
+from sklearn.metrics import accuracy_score, classification_report
+
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.2f}")
+print(classification_report(y_test, y_pred, target_names=y.unique()))
+```
+## plot tree
+```
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(50,50))
+plot_tree(model, feature_names=X.columns, class_names= y.unique(), filled=True)
+plt.show()
+```
+# Save and load model
+install: pip install joblib  
+## save model
+```
+import joblib
+joblib.dump(model, 'decision_tree_model.pkl')
+```
+## load model
+```
+import joblib
+model = joblib.load('decision_tree_model.pkl')
+
+# y_new_pred = model.predict(X_test)
 ```
