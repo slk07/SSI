@@ -117,7 +117,7 @@ model = joblib.load('decision_tree_model.pkl')
 # y_new_pred = model.predict(X_test)
 ```
 # Try:
-Wine Dataset
-Breast Cancer Wisconsin (Diagnostic
-Zoo Dataset
+Wine Dataset  
+Breast Cancer Wisconsin   
+Zoo Dataset  
 Car Evaluation Dataset
