@@ -9,9 +9,9 @@ X, y = iris.data, iris.target
 rf = RandomForestClassifier(oob_score=True, random_state=0)
 rf.fit(X, y)
 ```
-## ดู OOB accuracy
+## ดู OOB accuracy และ feature importance
 print("OOB accuracy:", rf.oob_score_) # oob acc เฉลี่ย
 print(rf.feature_importances_)
-## ดู feature importance
+
 for name, importance in zip(iris.feature_names, rf.feature_importances_):
     print(f"{name}: {importance}")
