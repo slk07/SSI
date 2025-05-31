@@ -61,3 +61,32 @@ print('X: \n',X)
 print('-----------------------------------------------------')
 print('y: \n',y)
 ```
+## Cross validation
+```
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=40)
+print('X_train:\n', X_train)
+print('y_train:\n', y_train)
+print('X_test:\n', X_test)
+print('y_test:\n', y_test)
+```
+## create model
+```
+from sklearn.ensemble import RandomForestClassifier
+# สร้าง Random Forest
+rf = RandomForestClassifier(
+
+    criterion="entropy", # method
+    n_estimators=100,    # ต้นไม้ 100 ต้น
+    oob_score=True,      # ใช้ OOB score
+    random_state=40      # เพื่อผลลัพธ์ reproducible
+
+)
+
+# เทรนโมเดลด้วย train set
+rf.fit(X_train, y_train)
+
+# OOB accuracy (บน train set) ข้อมูลที่บาง tree เคยเห็น เคยtrain
+print("OOB accuracy (train):", rf.oob_score_)
+```
