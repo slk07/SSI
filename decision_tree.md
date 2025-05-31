@@ -71,7 +71,9 @@ print('y_test:\n', y_test)
 ## create model
 ```
 from sklearn.tree import DecisionTreeClassifier
-model = DecisionTreeClassifier(criterion='entropy', random_state=42) # random_state มีเพื่อเลือก gain หรือ gini ที่เท่ากัน 
+model = DecisionTreeClassifier(criterion='entropy', random_state=42) # random_state มีเพื่อเลือก gain หรือ gini ที่เท่ากัน
+# model = DecisionTreeClassifier(criterion='entropy', max_depth = 4, min_samples_leaf =3, random_state=42) #
+
 model.fit(X_train, y_train)
 ```
 ## prediction
