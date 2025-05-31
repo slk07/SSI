@@ -90,3 +90,28 @@ rf.fit(X_train, y_train)
 # OOB accuracy (บน train set) ข้อมูลที่บาง tree เคยเห็น เคยtrain
 print("OOB accuracy (train):", rf.oob_score_)
 ```
+## predict
+```
+y_pred = rf.predict(X_test)
+```
+## ดู feature importance: เฉลี่ยจากต้นไม้แต่ละต้น
+```
+print("\nFeature Importances:")
+for name, importance in zip(X.columns, rf.feature_importances_):
+    print(f"{name}: {importance:.4f}")
+```
+## Confusion matrix
+```
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels= y.unique())
+disp.plot()
+```
+## Evaluations
+```
+from sklearn.metrics import accuracy_score, classification_report
+
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.2f}")
+print(classification_report(y_test, y_pred, target_names=y.unique()))
+```
