@@ -115,3 +115,5 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.2f}")
 print(classification_report(y_test, y_pred, target_names=y.unique()))
 ```
+# Try: 5 fold
+https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic
