@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 
 # Data points
 X = np.array([[1], [3], [6], [7]])   # Feature matrix, must be 2D
-y = np.array([5.5, 8.5, 13, 14.5])   # Target values
+y = np.array([5.5, 10, 13, 14.5])   # Target values
 
 # the model
 model = LinearRegression()
@@ -17,3 +17,24 @@ intercept = model.intercept_
 
 print(f"Equation of the line: y = {slope:.4f}x + {intercept:.4f}")
 ```
+## prediction
+```
+y_pred = model.predict(X)
+y_pred
+```
+## evaluation
+```
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+mae = mean_absolute_error(y, y_pred)
+mse = mean_squared_error(y, y_pred)
+rmse = np.sqrt(mse)
+mape = np.mean(np.abs((y - y_pred) / y)) * 100
+rsq = r2_score(y, y_pred)
+
+print("mea: ", mae)
+print("mse: ", mse)
+print("rmea: ", rmse)
+print("rsq: ", rsq)
+```
+
