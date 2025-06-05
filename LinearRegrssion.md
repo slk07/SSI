@@ -22,16 +22,24 @@ models = {
 preds = {}
 metrics = {}
 for name, model in models.items():
-    model.fit(X, y)  # train model
+    model.fit(X, y)
     y_pred = model.predict(X)
     preds[name] = y_pred
+
+    slope = model.coef_[0]
+    intercept = model.intercept_
+
+    # Print the equation of the fitted line
+    print(f"{name} Regression Equation: y = {slope:.4f}x + {intercept:.4f}")
+
     mae = mean_absolute_error(y, y_pred)
     mse = mean_squared_error(y, y_pred)
     rmse = np.sqrt(mse)
     rsq = r2_score(y, y_pred)
     metrics[name] = {
         "MAE": mae, "MSE": mse, "RMSE": rmse, "R2": rsq,
-        "slope": model.coef_[0], "intercept": model.intercept_
+        "slope": slope, "intercept": intercept
+    }
     }
 ```
 ## plot
