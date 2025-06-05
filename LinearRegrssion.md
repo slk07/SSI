@@ -19,6 +19,8 @@ models = {
 ```
 ## prediction & evaluaiton
 ```
+preds = {}
+metrics = {}
 for name, model in models.items():
     model.fit(X, y)  # train model
     y_pred = model.predict(X)
