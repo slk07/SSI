@@ -66,50 +66,88 @@ print(df[["MAE", "MSE", "RMSE", "R2", "slope", "intercept"]])
 ```
 
 # 2.
-
+```
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import pandas as pd
+import matplotlib.patches as mpatches
 
-## Data points (2 features)
+# Data
 X = np.array([[1, 2], [3, 4], [6, 5], [7, 8]])
 y = np.array([1, 4, 9, 14])
 
-## Models
 models = {
     "Linear": LinearRegression(),
     "Ridge": Ridge(alpha=1.0),
     "Lasso": Lasso(alpha=0.5)
 }
+colors = {"Linear": "blue", "Ridge": "green", "Lasso": "red"}
+alphas = {"Linear": 0.4, "Ridge": 0.4, "Lasso": 0.4}
 
-## Fit models
+metrics = {}
+
+# Fit and print equation
 for name, model in models.items():
     model.fit(X, y)
+    coefs = ' + '.join([f'{model.coef_[i]:.4f}*x{i+1}' for i in range(X.shape[1])])
+    print(f"{name} Regression Equation: y = {coefs} + {model.intercept_:.4f}")
 
-## Prepare meshgrid for surface plot
+    y_pred = model.predict(X)
+    
+    # พิมพ์ y_pred เทียบ y จริง
+    print(f"\n{name} Regression Prediction vs Actual:")
+    for xi, yi, ypi in zip(X, y, y_pred):
+        print(f"x = {xi}, y_true = {yi:.4f}, y_pred = {ypi:.4f}")
+
+    mae = mean_absolute_error(y, y_pred)
+    mse = mean_squared_error(y, y_pred)
+    rmse = np.sqrt(mse)
+    rsq = r2_score(y, y_pred)
+    metrics[name] = {
+        "MAE": mae, "MSE": mse, "RMSE": rmse, "R2": rsq,
+        "coef1": model.coef_[0], "coef2": model.coef_[1], "intercept": model.intercept_
+    }
+
+# Prepare meshgrid for surface
 x1_range = np.linspace(X[:,0].min(), X[:,0].max(), 20)
 x2_range = np.linspace(X[:,1].min(), X[:,1].max(), 20)
 x1_mesh, x2_mesh = np.meshgrid(x1_range, x2_range)
 X_grid = np.c_[x1_mesh.ravel(), x2_mesh.ravel()]
 
-## Plot
-fig = plt.figure(figsize=(12, 8))
+# Plot 3D
+fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
+
+# Data points
 ax.scatter(X[:,0], X[:,1], y, color='black', s=50, label='Data')
 
-colors = {"Linear": "blue", "Ridge": "green", "Lasso": "red"}
+# Regression surfaces (label only here, one per model)
 for name, model in models.items():
     y_surf = model.predict(X_grid).reshape(x1_mesh.shape)
-    ax.plot_surface(x1_mesh, x2_mesh, y_surf, alpha=0.4, color=colors[name], label=name)
-    # legend for surfaces: not native, so add a line for legend
-    ax.plot([np.nan],[np.nan],[np.nan], color=colors[name], label=f"{name}")
+    ax.plot_surface(x1_mesh, x2_mesh, y_surf, alpha=alphas[name], color=colors[name])
+
+# Custom legend (no duplicates)
+custom_lines = [
+    mpatches.Patch(color='blue', alpha=0.4, label='Linear'),
+    mpatches.Patch(color='green', alpha=0.4, label='Ridge'),
+    mpatches.Patch(color='red', alpha=0.4, label='Lasso'),
+]
+ax.legend(
+    handles=[plt.Line2D([], [], color='k', marker='o', linestyle='', label='Data')] + custom_lines
+)
 
 ax.set_xlabel('x1')
 ax.set_ylabel('x2')
 ax.set_zlabel('y')
 ax.set_title('Linear, Ridge, Lasso Regression Surfaces')
-ax.legend()
+plt.tight_layout()
 plt.show()
+
+# Show metrics table
+pd.set_option('display.float_format', lambda x: '%.4f' % x)
+df = pd.DataFrame(metrics).T
+print(df[["MAE", "MSE", "RMSE", "R2", "coef1", "coef2", "intercept"]])
+```
