@@ -38,7 +38,7 @@ print("mse: ", mse)
 print("rmea: ", rmse)
 print("rsq: ", rsq)
 ```
-# 3 model
+# 3 models
 ```
 import numpy as np
 import matplotlib.pyplot as plt
