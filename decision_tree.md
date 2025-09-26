@@ -19,7 +19,7 @@ tree.plot_tree(clf)
 ```
 ## predict
 ```
-clf.predict([[.51, 2.]])
+clf.predict([[.45, .51]])
 ```
 # decision tree (iris data)
 ```
