@@ -12,7 +12,7 @@ rf.fit(X, y)
 ## ดู OOB accuracy และ feature importance
 ```
 print("OOB accuracy:", rf.oob_score_) # oob acc เฉลี่ย
-print(rf.feature_importances_)
+print(rf.feature_importances_) # Information Gain ถ้าใช้ entropy
 for name, importance in zip(iris.feature_names, rf.feature_importances_):
     print(f"{name}: {importance}")
 ```
